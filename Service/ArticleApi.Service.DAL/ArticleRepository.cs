@@ -8,7 +8,7 @@ using System.Data;
 
 namespace ArticleApi.Service.DAL
 {
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository : IArticleRepository, IArticleLikeRepository
     {
         private readonly IArticleRepositoryConnection _ArticleRepositoryConnection;
 
@@ -36,7 +36,6 @@ namespace ArticleApi.Service.DAL
                 throw ex;
             }
         }
-
         public async Task<Article> Get(int id)
         {
             try
@@ -77,6 +76,65 @@ namespace ArticleApi.Service.DAL
                 if (returnValue != 0)
                 {
                     throw new Exception("Unable to save article.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<ArticleLike>> GetAllArticleLikes(int articleId)
+        {
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ArticleId", articleId);
+
+                var articleLikes = await _ArticleRepositoryConnection.Connection.QueryAsync<ArticleLike>("GetAllArticleLikes", parameter, commandType: CommandType.StoredProcedure);
+
+                return articleLikes;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task AddArticleLike(int articleId, int userId)
+        {
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ArticleId", articleId);
+                parameter.Add("@UserId", userId);
+
+                var returnValue = await _ArticleRepositoryConnection.Connection.QueryFirstAsync<int>("AddArticleLike", parameter, commandType: CommandType.StoredProcedure);
+
+                if (returnValue != 0)
+                {
+                    throw new Exception("Unable to add article like.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task RemoveArticleLike(int articleId, int userId)
+        {
+            try
+            {
+                var parameter = new DynamicParameters();
+                parameter.Add("@ArticleId", articleId);
+                parameter.Add("@UserId", userId);
+
+                var returnValue = await _ArticleRepositoryConnection.Connection.QueryFirstAsync<int>("RemoveArticleLike", parameter, commandType: CommandType.StoredProcedure);
+
+                if (returnValue != 0)
+                {
+                    throw new Exception("Unable to remove article like.");
                 }
             }
             catch (Exception ex)
