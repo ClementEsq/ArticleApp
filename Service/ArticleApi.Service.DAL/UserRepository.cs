@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ArticleApi.Service.DAL.Interfaces;
+﻿using ArticleApi.Service.DAL.Interfaces;
 using ArticleApi.Service.Models;
 using Dapper;
 using System;
@@ -10,11 +9,11 @@ namespace ArticleApi.Service.DAL
 {
     public class UserRepository : IRepository<User, int>
     {
-        private readonly IArticleRepositoryConnection ArticleRepositoryConnection;
+        private readonly IArticleRepositoryConnection _ArticleRepositoryConnection;
 
         public UserRepository(IArticleRepositoryConnection ArticleRepositoryConnection)
         {
-            this.ArticleRepositoryConnection = ArticleRepositoryConnection;
+            _ArticleRepositoryConnection = ArticleRepositoryConnection;
         }
 
         public Task Delete(User entity)
@@ -29,7 +28,7 @@ namespace ArticleApi.Service.DAL
                 var parameter = new DynamicParameters();
                 parameter.Add("@UserId", id);
 
-                var user = await ArticleRepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, commandType: CommandType.StoredProcedure);
+                var user = await _ArticleRepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, commandType: CommandType.StoredProcedure);
 
                 return user;
             }
@@ -50,7 +49,7 @@ namespace ArticleApi.Service.DAL
                 parameter.Add("@UserEmail", entity.UserEmail);
                 parameter.Add("@Password", entity.Password);
 
-                var returnValue = await ArticleRepositoryConnection.Connection.QueryFirstAsync<int>("CreateUser", parameter, commandType: CommandType.StoredProcedure);
+                var returnValue = await _ArticleRepositoryConnection.Connection.QueryFirstAsync<int>("CreateUser", parameter, commandType: CommandType.StoredProcedure);
 
                 if(returnValue != 0)
                 {
