@@ -1,11 +1,11 @@
 ﻿using ArticleApi.Service.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ArticleApi.Service.DAL.Interfaces
 {
-    public interface IArticleRepository : IRepository<Article, string>
+    public interface IArticleRepository : IRepository<Article, int>
     {
-        IEnumerable<User> FindAll();
-        IEnumerable<User> Find(int id);
+        Task<IEnumerable<Article>> GetAllArticles();
     }
 }
