@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArticleApi.Service.Controll
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.Models", "ArticleApi.Service.Models\ArticleApi.Service.Models.csproj", "{BD370083-5D88-45F4-BE7C-9FF42FA6D6F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.DAL", "ArticleApi.Service.DAL\ArticleApi.Service.DAL.csproj", "{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BD370083-5D88-45F4-BE7C-9FF42FA6D6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD370083-5D88-45F4-BE7C-9FF42FA6D6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD370083-5D88-45F4-BE7C-9FF42FA6D6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

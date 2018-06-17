@@ -7,3 +7,4 @@ nuget Microsoft.AspNetCore.All 2.1.0
 nuget Microsoft.ApplicationInsights.AspNetCore 2.3.0
 nuget Microsoft.Extensions.Logging.Debug 2.1.0
 nuget Microsoft.VisualStudio.Web.BrowserLink 2.1.0
+nuget Dapper 1.50.5
