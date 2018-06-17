@@ -1,0 +1,9 @@
+﻿Microsoft.NETCore.App
+Microsoft.AspNetCore
+Microsoft.Extensions.Configuration
+Microsoft.Extensions.DependencyInjection
+Microsoft.AspNetCore.Mvc
+Microsoft.ApplicationInsights.AspNetCore
+Microsoft.AspNetCore.StaticFiles
+Microsoft.Extensions.Logging.Debug
+Microsoft.VisualStudio.Web.BrowserLink

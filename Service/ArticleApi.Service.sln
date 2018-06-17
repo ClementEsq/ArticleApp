@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service", "ArticleApi.Service\ArticleApi.Service.csproj", "{197BC642-D10F-467D-9284-6781FDA40510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.Controllers", "ArticleApi.Service.Controllers\ArticleApi.Service.Controllers.csproj", "{5ADF6252-E396-4C2A-9A1B-6898125AA346}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{197BC642-D10F-467D-9284-6781FDA40510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{197BC642-D10F-467D-9284-6781FDA40510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{197BC642-D10F-467D-9284-6781FDA40510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{197BC642-D10F-467D-9284-6781FDA40510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ADF6252-E396-4C2A-9A1B-6898125AA346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ADF6252-E396-4C2A-9A1B-6898125AA346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ADF6252-E396-4C2A-9A1B-6898125AA346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ADF6252-E396-4C2A-9A1B-6898125AA346}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54D305F6-B9AE-4E67-BDDF-DD5BB6BF8A01}
+	EndGlobalSection
+EndGlobal

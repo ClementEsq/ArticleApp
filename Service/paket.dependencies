@@ -1,0 +1,9 @@
+source https://www.nuget.org/api/v2
+
+nuget Fake
+nuget Fake.Core.Target
+nuget Microsoft.NETCore.App 2.1.0
+nuget Microsoft.AspNetCore.All 2.1.0
+nuget Microsoft.ApplicationInsights.AspNetCore 2.3.0
+nuget Microsoft.Extensions.Logging.Debug 2.1.0
+nuget Microsoft.VisualStudio.Web.BrowserLink 2.1.0

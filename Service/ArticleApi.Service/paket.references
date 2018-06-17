@@ -1,0 +1,9 @@
+Microsoft.NETCore.App
+Microsoft.AspNetCore
+Microsoft.AspNetCore.Http.Abstractions
+Microsoft.AspNetCore.Http
+Microsoft.AspNetCore.Hosting
+Microsoft.ApplicationInsights.AspNetCore
+Microsoft.AspNetCore.StaticFiles
+Microsoft.Extensions.Logging.Debug
+Microsoft.VisualStudio.Web.BrowserLink
