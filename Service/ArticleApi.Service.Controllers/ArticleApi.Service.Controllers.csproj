@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\ArticleApi.Service.DAL\ArticleApi.Service.DAL.csproj" />
+    <ProjectReference Include="..\ArticleApi.Service.DTO\ArticleApi.Service.DTO.csproj" />
+    <ProjectReference Include="..\ArticleApi.Service.Infrastructure\ArticleApi.Service.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>

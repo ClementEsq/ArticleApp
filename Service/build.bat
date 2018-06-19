@@ -9,6 +9,11 @@ SET BASE_PATH=%cd%
 SET SQL_FILE_PATH=ArticleApi.Service.Database.Scripts\NewsArticleRepositoryDatabaseCreation.sql
 SET DATABASE_CREATION_LOG=%BASE_PATH%\dbOutput\%DB_LOG_FILE%
 
+sqlcmd -S ".\SQLEXPRESS" -i "%BASE_PATH%\%SQL_FILE_PATH%" -v path="%BASE_PATH%\"
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
 .paket\paket.exe init
 if errorlevel 1 (
   exit /b %errorlevel%
@@ -20,11 +25,6 @@ if errorlevel 1 (
 )
 
 dotnet restore
-if errorlevel 1 (
-  exit /b %errorlevel%
-)
-
-sqlcmd -S ".\SQLEXPRESS" -i "%BASE_PATH%\%SQL_FILE_PATH%" -v path="%BASE_PATH%\"
 if errorlevel 1 (
   exit /b %errorlevel%
 )

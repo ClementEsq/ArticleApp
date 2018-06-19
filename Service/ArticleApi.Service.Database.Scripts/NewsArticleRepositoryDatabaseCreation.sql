@@ -53,6 +53,7 @@ PRINT 'View creation complete'
 
 PRINT 'Creating stored procedures'
 
+:r $(path)ArticleApi.Service.Database.Scripts\StoredProcedures\NewsArticleRepositoryStoredProcedureGetUserByEmail.sql
 :r $(path)ArticleApi.Service.Database.Scripts\StoredProcedures\NewsArticleRepositoryStoredProcedureAddArticleLike.sql
 :r $(path)ArticleApi.Service.Database.Scripts\StoredProcedures\NewsArticleRepositoryStoredProcedureCreateArticle.sql
 :r $(path)ArticleApi.Service.Database.Scripts\StoredProcedures\NewsArticleRepositoryStoredProcedureCreateUser.sql

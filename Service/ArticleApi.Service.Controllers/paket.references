@@ -1,5 +1,4 @@
-﻿Microsoft.NETCore.App
-Microsoft.AspNetCore
+﻿Microsoft.AspNetCore
 Microsoft.Extensions.Configuration
 Microsoft.Extensions.DependencyInjection
 Microsoft.AspNetCore.Mvc

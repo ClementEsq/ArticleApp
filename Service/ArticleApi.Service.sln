@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.Models",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.DAL", "ArticleApi.Service.DAL\ArticleApi.Service.DAL.csproj", "{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.Infrastructure", "ArticleApi.Service.Infrastructure\ArticleApi.Service.Infrastructure.csproj", "{5845B421-57D1-4753-8C6F-E67F6DB8B72F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArticleApi.Service.DTO", "ArticleApi.Service.DTO\ArticleApi.Service.DTO.csproj", "{22DA7871-852B-4392-9B2E-89404B1C06FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9159DED-F0C5-40B7-8ED0-35380DE7BA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5845B421-57D1-4753-8C6F-E67F6DB8B72F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5845B421-57D1-4753-8C6F-E67F6DB8B72F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5845B421-57D1-4753-8C6F-E67F6DB8B72F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5845B421-57D1-4753-8C6F-E67F6DB8B72F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22DA7871-852B-4392-9B2E-89404B1C06FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22DA7871-852B-4392-9B2E-89404B1C06FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22DA7871-852B-4392-9B2E-89404B1C06FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22DA7871-852B-4392-9B2E-89404B1C06FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
