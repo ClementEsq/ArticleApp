@@ -28,7 +28,7 @@ namespace ArticleApi.Service.DAL
                     var parameter = new DynamicParameters();
                     parameter.Add("@ArticleId", entity.ArticleId);
 
-                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("DeleteArticle", parameter, commandType: CommandType.StoredProcedure);
+                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("DeleteArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     if (returnValue != 0)
                     {
@@ -55,7 +55,7 @@ namespace ArticleApi.Service.DAL
                     var parameter = new DynamicParameters();
                     parameter.Add("@ArticleId", id);
 
-                    var article = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<Article>("GetArticle", parameter, commandType: CommandType.StoredProcedure);
+                    var article = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<Article>("GetArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     _dalSession.UnitOfWork.Commit();
 
@@ -77,7 +77,7 @@ namespace ArticleApi.Service.DAL
                 {
                     _dalSession.UnitOfWork.Begin();
 
-                    var articles = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryAsync<Article>("GetAllArticles", commandType: CommandType.StoredProcedure);
+                    var articles = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryAsync<Article>("GetAllArticles", transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     _dalSession.UnitOfWork.Commit();
 
@@ -127,7 +127,7 @@ namespace ArticleApi.Service.DAL
                     var parameter = new DynamicParameters();
                     parameter.Add("@ArticleId", articleId);
 
-                    var articleLikes = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryAsync<ArticleLike>("GetAllArticleLikes", parameter, commandType: CommandType.StoredProcedure);
+                    var articleLikes = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryAsync<ArticleLike>("GetAllArticleLikes", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     _dalSession.UnitOfWork.Commit();
 
@@ -153,7 +153,7 @@ namespace ArticleApi.Service.DAL
                     parameter.Add("@ArticleId", articleId);
                     parameter.Add("@UserId", userId);
 
-                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("AddArticleLike", parameter, commandType: CommandType.StoredProcedure);
+                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("AddArticleLike", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     if (returnValue != 0)
                     {
@@ -182,7 +182,7 @@ namespace ArticleApi.Service.DAL
                     parameter.Add("@ArticleId", articleId);
                     parameter.Add("@UserId", userId);
 
-                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("RemoveArticleLike", parameter, commandType: CommandType.StoredProcedure);
+                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("RemoveArticleLike", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     if (returnValue != 0)
                     {
@@ -209,7 +209,7 @@ namespace ArticleApi.Service.DAL
                 parameter.Add("@ArticleBodyImagePath", entity.BodyImagePath);
                 parameter.Add("@ArticleAuthorId", entity.User.UserId);
 
-                return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateArticle", parameter, commandType: CommandType.StoredProcedure);
+                return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
         }
 
         private async Task<int> UpdateExistingArticle(Article entity, IDalSession dalSession)
@@ -222,7 +222,7 @@ namespace ArticleApi.Service.DAL
             parameter.Add("@ArticleHeroImagePath", entity.HeroImagePath);
             parameter.Add("@ArticleBodyImagePath", entity.BodyImagePath);
 
-            return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("UpdateArticle", parameter, commandType: CommandType.StoredProcedure);
+            return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("UpdateArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
         }
     }
 }

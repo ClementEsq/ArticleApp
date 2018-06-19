@@ -32,7 +32,7 @@ namespace ArticleApi.Service.DAL
                     var parameter = new DynamicParameters();
                     parameter.Add("@UserId", id);
 
-                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, commandType: CommandType.StoredProcedure);
+                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     _dalSession.UnitOfWork.Commit();
 
@@ -57,7 +57,7 @@ namespace ArticleApi.Service.DAL
                     var parameter = new DynamicParameters();
                     parameter.Add("@EmailAddress", emailAdress);
 
-                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUserByEmail", parameter, commandType: CommandType.StoredProcedure);
+                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUserByEmail", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     _dalSession.UnitOfWork.Commit();
 
@@ -84,7 +84,7 @@ namespace ArticleApi.Service.DAL
                     parameter.Add("@UserEmail", entity.UserEmail);
                     parameter.Add("@Password", entity.Password);
 
-                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateUser", parameter, commandType: CommandType.StoredProcedure);
+                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
                     if (returnValue != 0)
                     {

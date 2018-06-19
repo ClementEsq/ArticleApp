@@ -23,7 +23,7 @@ namespace ArticleApi.Service.Controllers.Extensions
         private static void RegisterDataAccessComponents(IServiceCollection services)
         {
 
-            services.AddSingleton<IDbConnection>(conn => new SqlConnection("Server=.\\SQLEXPRESS;Database=NewsArticleRepositoryDb;Integrated Security=SSPI"));
+            services.AddTransient<IDbConnection>(conn => new SqlConnection("Server=.\\SQLEXPRESS;Database=NewsArticleRepositoryDb;Integrated Security=SSPI"));
             //services.BuildServiceProvider();
 
             services.AddTransient<IArticleRepositoryConnection, ArticleRepositoryConnection>();
