@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArticleApi.Service.DAL\ArticleApi.Service.DAL.csproj" />
+    <ProjectReference Include="..\ArticleApi.Service.DTO\ArticleApi.Service.DTO.csproj" />
+    <ProjectReference Include="..\ArticleApi.Service.Models\ArticleApi.Service.Models.csproj" />
+  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>
