@@ -24,7 +24,6 @@ namespace ArticleApi.Service.Controllers.Extensions
         {
 
             services.AddTransient<IDbConnection>(conn => new SqlConnection("Server=.\\SQLEXPRESS;Database=NewsArticleRepositoryDb;Integrated Security=SSPI"));
-            //services.BuildServiceProvider();
 
             services.AddTransient<IArticleRepositoryConnection, ArticleRepositoryConnection>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();

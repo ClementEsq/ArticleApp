@@ -7,6 +7,7 @@ using ArticleApi.Service.DAL.Interfaces;
 using System.Net;
 using ArticleApi.Service.Models;
 using ArticleApi.Service.DTO.Helpers;
+using System.Collections.Generic;
 
 namespace ArticleApi.Service.Infrastructure
 {
@@ -52,9 +53,9 @@ namespace ArticleApi.Service.Infrastructure
             return responseCode;
         }
 
-        public async Task<GenericResponse<object>> GetAllArticles()
+        public async Task<GenericResponse<IEnumerable<Article>>> GetAllArticles()
         {
-            var response = new GenericResponse<object>();
+            var response = new GenericResponse<IEnumerable<Article>>();
 
             try
             {
@@ -74,9 +75,9 @@ namespace ArticleApi.Service.Infrastructure
             return response;
         }
 
-        public async Task<GenericResponse<object>> GetArticle(int articleId)
+        public async Task<GenericResponse<Article>> GetArticle(int articleId)
         {
-            var response = new GenericResponse<object>();
+            var response = new GenericResponse<Article>();
 
             try
             {
@@ -96,9 +97,9 @@ namespace ArticleApi.Service.Infrastructure
             return response;
         }
 
-        public async Task<GenericResponse<object>> GetArticleLikes(int articleId)
+        public async Task<GenericResponse<IEnumerable<ArticleLike>>> GetArticleLikes(int articleId)
         {
-            var response = new GenericResponse<object>();
+            var response = new GenericResponse<IEnumerable<ArticleLike>>();
 
             try
             {
