@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 
-import * as routes from '../constants/routes';
+//import * as routes from '../constants/routes';
 
 
 class SignUpForm extends Component {
@@ -40,13 +40,14 @@ class SignUpForm extends Component {
     event.preventDefault();
   }
 
+
   render() {
 
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           First Name:
-          <input type="text" value={this.state.firstName} onChange={this.handleChange} placeholder="First Name" />
+          <input name="name" type="text" value={this.state.firstName} onChange={this.onFieldChange('name').bind(this)} placeholder="First Name" />
         </label>
         <label>
           Last Name:
