@@ -1,11 +1,12 @@
 ﻿using ArticleApi.Service.DTO.Requests;
 using System.Threading.Tasks;
 using System.Net;
+using ArticleApi.Service.DTO;
 
 namespace ArticleApi.Service.Infrastructure.Interfaces
 {
     public interface IRegistrationService
     {
-        Task<HttpStatusCode> SignUp(SignUpRequest newUser);
+        Task<GenericResponse<string>> SignUp(SignUpRequest newUser);
     }
 }

@@ -1,36 +1,17 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  Link,
+  withRouter,
+} from 'react-router-dom';
+
 
 import * as routes from '../constants/routes';
 
 
-const SignUpPage = () =>
-  <div>
-    <h1>SignUp</h1>
-    <SignUpForm />
-  </div>
-
-const INITIAL_STATE = {
-  firstName: '',
-  lastName: '',
-  isPublisher: false,
-  userEmail: '',
-  password: '',
-  passwordConfirm: '',
-  error: null,
-};
-
 class SignUpForm extends Component {
+
   constructor(props) {
     super(props);
-  }
-
-  onSubmit = (event) => {
-
-  }
-
-  render() {
-
     this.state = {
       firstName: '',
       lastName: '',
@@ -41,39 +22,66 @@ class SignUpForm extends Component {
       error: null,
     };
 
-    const isInvalid =
-    this.state.password !== this.state.passwordConfirm ||
-    this.state.password === '' ||
-    this.state.userEmail === '' ||
-    this.state.firstName === '' ||
-    this.state.firstName === '';
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({firstName: event.target.firstName});
+    this.setState({lastName: event.target.lastName});
+    this.setState({isPublisher: event.target.isPublisher});
+    this.setState({userEmail: event.target.userEmail});
+    this.setState({password: event.target.password});
+    this.setState({passwordConfirm: event.target.passwordConfirm});
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.firstName);
+    event.preventDefault();
+  }
+
+  render() {
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input value="" onChange={event => this.setState({firstName: event.target.value})} type="text" placeholder="First Name"/>
-        <input value={this.state.lastName} onChange={event => this.setState({lastName: event.target.value})} type="text" placeholder="Last Name"/>
-        <input value={this.state.isPublisher} onChange={event => this.setState({isPublisher: event.target.checked})} type="checkbox" />
-        <input value={this.state.userEmail} onChange={event => this.setState({userEmail: event.target.value})} type="text" placeholder="Email Address"/>
-        <input value={this.state.password} onChange={event => this.setState({password: event.target.value})} type="password" placeholder="Password"/>
-        <input value={this.state.passwordConfirm} onChange={event => this.setState({passwordConfirm: event.target.value})} type="password" placeholder="Password"/>
-        
-        <button type="submit">Sign Up</button>
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          First Name:
+          <input type="text" value={this.state.firstName} onChange={this.handleChange} placeholder="First Name" />
+        </label>
+        <label>
+          Last Name:
+          <input type="text" value={this.state.lastName} onChange={this.handleChange} placeholder="Last Name" />
+        </label>
+        <label>
+          Publisher:
+          <input type="checkbox" value={this.state.isPublisher} onChange={this.handleChange} />
+        </label>
+        <label>
+          Email Address:
+          <input type="text" value={this.state.userEmail} onChange={this.handleChange} placeholder="Email Address" />
+        </label>
+        <label>
+          Password:
+          <input type="password" value={this.state.password} onChange={this.handleChange} placeholder="Password" />
+        </label>
+        <label>
+          Confirm Password:
+          <input type="password" value={this.state.passwordConfirm} onChange={this.handleChange} placeholder="Password" />
+        </label>
 
-        { this.state.error && <p>{this.state.error}</p> }
+         <button type="submit">submit</button>
+
+         { this.state.error && <p>{this.state.error}</p> }
       </form>
     );
   }
 
 }
 
-const SignUpLink = () =>
-  <p>
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
-  </p>
+const SignUpPage = () =>
+  <div>
+    <h1>SignUp</h1>
+    <SignUpForm />
+  </div>
 
-export {
-  SignUpForm,
-  SignUpLink,
-};
-
-export default SignUpPage;
+export default withRouter(SignUpPage);

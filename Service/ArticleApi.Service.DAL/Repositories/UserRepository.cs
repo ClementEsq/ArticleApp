@@ -23,79 +23,70 @@ namespace ArticleApi.Service.DAL
 
         public async Task<User> Get(int id)
         {
-            using (_dalSession)
+            try
             {
-                try
-                {
-                    _dalSession.UnitOfWork.Begin();
+                var parameter = new DynamicParameters();
+                parameter.Add("@UserId", id);
 
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@UserId", id);
+                var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
-                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
-
-                    _dalSession.UnitOfWork.Commit();
-
-                    return user;
-                }
-                catch (Exception ex)
-                {
-                    _dalSession.UnitOfWork.Rollback();
-                    throw ex;
-                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public async Task<User> GetUserByEmail(string emailAdress)
         {
-            using (_dalSession)
+            try
             {
-                try
-                {
-                    _dalSession.UnitOfWork.Begin();
+                var parameter = new DynamicParameters();
+                parameter.Add("@EmailAddress", emailAdress);
 
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@EmailAddress", emailAdress);
+                var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUserByEmail", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
 
-                    var user = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstOrDefaultAsync<User>("GetUserByEmail", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
-
-                    _dalSession.UnitOfWork.Commit();
-
-                    return user;
-                }
-                catch (Exception ex)
-                {
-                    _dalSession.UnitOfWork.Rollback();
-                    throw ex;
-                }
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public async Task Save(User entity)
         {
-            using (_dalSession)
+            try
             {
-                try
-                {
-                    var parameter = new DynamicParameters();
-                    parameter.Add("@FirstName", entity.FirstName);
-                    parameter.Add("@LastName", entity.LastName);
-                    parameter.Add("@IsPublisher", entity.IsPublisher);
-                    parameter.Add("@UserEmail", entity.UserEmail);
-                    parameter.Add("@Password", entity.Password);
+                _dalSession.UnitOfWork.Begin();
 
-                    var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
+                var parameter = new DynamicParameters();
+                parameter.Add("@FirstName", entity.FirstName);
+                parameter.Add("@LastName", entity.LastName);
+                parameter.Add("@IsPublisher", entity.IsPublisher);
+                parameter.Add("@UserEmail", entity.UserEmail);
+                parameter.Add("@Password", entity.Password);
 
-                    if (returnValue != 0)
-                    {
-                        throw new Exception("Unable to save user.");
-                    }
-                }
-                catch (Exception ex)
+                var returnValue = await _dalSession.UnitOfWork.RepositoryConnection.Connection.ExecuteScalarAsync<int>("CreateUser", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
+
+                if (returnValue != 0)
                 {
-                    throw ex;
+                    throw new Exception("Unable to save user.");
                 }
+
+                _dalSession.UnitOfWork.Commit();
             }
+            catch (Exception ex)
+            {
+                _dalSession.UnitOfWork.Rollback();
+                throw ex;
+            }
+        }
+
+        public void Dispose()
+        {
+            _dalSession.Dispose();
         }
     }
 }

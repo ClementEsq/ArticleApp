@@ -41,6 +41,8 @@ namespace ArticleApi.Service.Controllers.Extensions
         {
 
             services.AddTransient<IArticleService, ArticleService>();
+            services.AddTransient<IRegistrationService, RegistrationService>();
+            services.AddTransient<ILogInService, LogInService>();
         }
     }
 }

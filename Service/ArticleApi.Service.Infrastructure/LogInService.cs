@@ -16,19 +16,22 @@ namespace ArticleApi.Service.Infrastructure
             _userRepository = userRepository;
         }
 
-        public async Task<GenericResponse<object>> LogIn(string email, string password)
+        public async Task<GenericResponse<bool>> LogIn(string email, string password)
         {
-            var response = new GenericResponse<object>();
+            var response = new GenericResponse<bool>();
 
             try
             {
-                response.Status = HttpStatusCode.OK;
-                response.Message = "Success";
+                using (_userRepository)
+                {
+                    response.Status = HttpStatusCode.OK;
+                    response.Message = "Success";
 
-                var user = await _userRepository.GetUserByEmail(email);
-                var isValidUser = user.Password.Equals(password);
+                    var user = await _userRepository.GetUserByEmail(email);
+                    var isValidUser = user?.Password.Equals(password);
 
-                response.Payload = isValidUser;
+                    response.Payload = isValidUser == true;
+                }
             }
             catch (Exception ex)
             {

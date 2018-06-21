@@ -18,22 +18,34 @@ namespace ArticleApi.Service.Infrastructure
             _userRepository = userRepository;
         }
 
-        public async Task<GenericResponse<object>> SignUp(SignUpRequest newUser)
+        public async Task<GenericResponse<string>> SignUp(SignUpRequest newUser)
         {
-            var response = new GenericResponse<object>();
+            var response = new GenericResponse<string>();
 
             try
             {
-                response.Status = HttpStatusCode.OK;
-                response.Message = "Success";
+                using (_userRepository)
+                {
+                    response.Status = HttpStatusCode.OK;
+                    response.Message = "Success";
+                    response.Payload = $"User with the email address '{newUser.UserEmail}' already exists";
 
-                var user = DTOConverterHelper.CreateUserObjectFromRequest(newUser);
-                await _userRepository.Save(user);
+
+                    var user = await _userRepository.GetUserByEmail(newUser.UserEmail);
+
+                    if (user == null)
+                    {
+                        user = DTOConverterHelper.CreateUserObjectFromRequest(newUser);
+                        await _userRepository.Save(user);
+                        response.Payload = $"User created";
+                    }
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Status = HttpStatusCode.InternalServerError;
                 response.Message = "Failed";
+                response.Payload = $"User not created";
             }
 
             return response;

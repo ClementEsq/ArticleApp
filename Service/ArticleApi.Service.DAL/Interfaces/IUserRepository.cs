@@ -1,12 +1,10 @@
 ﻿using ArticleApi.Service.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ArticleApi.Service.DAL.Interfaces
 {
-    public interface IUserRepository : IRepository<User, int>
+    public interface IUserRepository : IRepository<User, int>, IDisposable
     {
         Task<User> GetUserByEmail(string emailAdress);
     }

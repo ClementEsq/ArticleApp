@@ -26,7 +26,10 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-                await _articleRepository.Delete(new Article() { ArticleId = articleId });
+                using (_articleRepository)
+                {
+                    await _articleRepository.Delete(new Article() { ArticleId = articleId });
+                }
             }
             catch (Exception ex)
             {
@@ -42,8 +45,11 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-                var articleObj = DTOConverterHelper.CreateArticleObjectFromRequest(article);
-                await _articleRepository.Save(articleObj);
+                using (_articleRepository)
+                {
+                    var articleObj = DTOConverterHelper.CreateArticleObjectFromRequest(article);
+                    await _articleRepository.Save(articleObj);
+                }
             }
             catch (Exception ex)
             {
@@ -59,12 +65,15 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-                response.Status = HttpStatusCode.OK;
-                response.Message = "Success";
+                using (_articleRepository)
+                {
+                    response.Status = HttpStatusCode.OK;
+                    response.Message = "Success";
 
-                var articles = await _articleRepository.GetAllArticles();
+                    var articles = await _articleRepository.GetAllArticles();
 
-                response.Payload = articles;
+                    response.Payload = articles;
+                }
             }
             catch (Exception ex)
             {
@@ -81,12 +90,15 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-                response.Status = HttpStatusCode.OK;
-                response.Message = "Success";
+                using (_articleRepository)
+                {
+                    response.Status = HttpStatusCode.OK;
+                    response.Message = "Success";
 
-                var article = await _articleRepository.Get(articleId);
+                    var article = await _articleRepository.Get(articleId);
 
-                response.Payload = article;
+                    response.Payload = article;
+                }
             }
             catch (Exception ex)
             {
@@ -103,12 +115,15 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-                response.Status = HttpStatusCode.OK;
-                response.Message = "Success";
+                using (_articleRepository)
+                {
+                    response.Status = HttpStatusCode.OK;
+                    response.Message = "Success";
 
-                var article = await _articleRepository.GetAllArticleLikes(articleId);
+                    var article = await _articleRepository.GetAllArticleLikes(articleId);
 
-                response.Payload = article;
+                    response.Payload = article;
+                }
             }
             catch (Exception ex)
             {
@@ -125,9 +140,10 @@ namespace ArticleApi.Service.Infrastructure
 
             try
             {
-
-                await _articleRepository.AddArticleLike(articleId, userId);
-
+                using (_articleRepository)
+                {
+                    await _articleRepository.AddArticleLike(articleId, userId);
+                }
             }
             catch (Exception ex)
             {
