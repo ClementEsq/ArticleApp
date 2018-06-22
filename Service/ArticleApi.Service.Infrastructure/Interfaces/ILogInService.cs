@@ -1,6 +1,5 @@
 ﻿using ArticleApi.Service.DTO;
 using System.Threading.Tasks;
-using System.Net;
 
 
 namespace ArticleApi.Service.Infrastructure.Interfaces

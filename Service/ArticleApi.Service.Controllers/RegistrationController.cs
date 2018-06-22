@@ -2,7 +2,6 @@
 using ArticleApi.Service.DTO.Requests;
 using ArticleApi.Service.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace ArticleApi.Service.Controllers

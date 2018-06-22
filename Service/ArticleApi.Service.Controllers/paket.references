@@ -6,3 +6,4 @@ Microsoft.ApplicationInsights.AspNetCore
 Microsoft.AspNetCore.StaticFiles
 Microsoft.Extensions.Logging.Debug
 Microsoft.VisualStudio.Web.BrowserLink
+Microsoft.AspNetCore.Cors
