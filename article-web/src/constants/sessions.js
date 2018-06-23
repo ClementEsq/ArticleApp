@@ -1,0 +1,1 @@
+export const Is_User_Authenticated = 'IsUserAuthenticated';
