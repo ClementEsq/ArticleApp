@@ -1,5 +1,6 @@
 ﻿using ArticleApi.Service.DTO;
 using ArticleApi.Service.DTO.Requests;
+using ArticleApi.Service.DTO.Responses;
 using ArticleApi.Service.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace ArticleApi.Service.Controllers
 
         [HttpPost]
         [Route("signup")]
-        public async Task<ActionResult<GenericResponse<string>>> SignUp([FromBody]SignUpRequest sur)
+        public async Task<ActionResult<GenericResponse<GenericPayload>>> SignUp([FromBody]SignUpRequest sur)
         {
 
             var response = await _registrationService.SignUp(sur);

@@ -6,6 +6,7 @@ using ArticleApi.Service.DAL.Interfaces;
 using System.Net;
 using System;
 using ArticleApi.Service.DTO.Helpers;
+using ArticleApi.Service.DTO.Responses;
 
 namespace ArticleApi.Service.Infrastructure
 {
@@ -18,9 +19,9 @@ namespace ArticleApi.Service.Infrastructure
             _userRepository = userRepository;
         }
 
-        public async Task<GenericResponse<string>> SignUp(SignUpRequest newUser)
+        public async Task<GenericResponse<GenericPayload>> SignUp(SignUpRequest newUser)
         {
-            var response = new GenericResponse<string>();
+            var response = new GenericResponse<GenericPayload>();
 
             try
             {
@@ -28,27 +29,40 @@ namespace ArticleApi.Service.Infrastructure
                 {
                     response.Status = HttpStatusCode.OK;
                     response.Message = "Success";
-                    response.Payload = $"User with the email address '{newUser.UserEmail}' already exists";
-
-
-                    var user = await _userRepository.GetUserByEmail(newUser.UserEmail);
-
-                    if (user == null)
+                    var payload = new GenericPayload()
                     {
-                        user = DTOConverterHelper.CreateUserObjectFromRequest(newUser);
-                        await _userRepository.Save(user);
-                        response.Payload = $"User created";
-                    }
+                        IsSuccess = false,
+                    };
+
+                    var isCreated = await TryCreateUser(_userRepository, newUser);
+
+                    payload.IsSuccess = isCreated;
+                    payload.SpecificMessage = isCreated ? "User created" : $"Unable to create user {newUser.UserEmail}";
+
+                    response.Payload = payload;
                 }
             }
             catch (Exception ex)
             {
                 response.Status = HttpStatusCode.InternalServerError;
                 response.Message = "Failed";
-                response.Payload = $"User not created";
             }
 
             return response;
+        }
+
+        private async Task<bool> TryCreateUser(IUserRepository repository, SignUpRequest newUser)
+        {
+            var user = await repository.GetUserByEmail(newUser.UserEmail);
+            var isCreated = false;
+            if (user == null)
+            {
+                user = DTOConverterHelper.CreateUserObjectFromRequest(newUser);
+                await repository.Save(user);
+                isCreated = true;
+            }
+
+            return isCreated;
         }
     }
 }
