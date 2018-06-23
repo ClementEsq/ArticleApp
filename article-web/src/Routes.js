@@ -1,24 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
+import Signup from "./containers/Signup";
 import AppliedRoute from "./components/AppliedRoute";
 
+export default ({ childProps }) =>
+  <Switch>
+    <AppliedRoute path="/" exact component={Home} props={childProps} />
+    <AppliedRoute path="/login" exact component={Login} props={childProps} />
+    <AppliedRoute path="/signup" exact component={Signup} props={childProps} />
 
-class ArticleRoutes extends Component{
-    
-    render(){
-        return(
-            <Switch>
-                <AppliedRoute path='/' exact component={Home} props={this.props} />
-                <AppliedRoute path="/login" exact component={Login} props={this.props} />
-
-                {/*'NotFound' MUST BE LAST*/}
-                <Route component={NotFound} />
-            </Switch>
-        );
-    }
-}
-
-export default ArticleRoutes;
+    {/*'NotFound' MUST BE LAST*/}
+    <Route component={NotFound} />
+  </Switch>;

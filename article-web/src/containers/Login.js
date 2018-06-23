@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import LoaderButton from "../components/LoaderButton";
 import  {Login_API_ENDPOINT} from '../constants/endPoints';
 import  {AXIOS_CONFIG} from '../constants/configs';
+import  {Is_User_Authenticated} from '../constants/sessions';
 import axios from 'axios';
 import "./Login.css";
 
@@ -12,7 +14,8 @@ class Login extends Component{
         this.state = {
             email: '',
             password: '',
-            error: null
+            error: null,
+            isLoading: false
         };
     }
 
@@ -28,19 +31,36 @@ class Login extends Component{
 
     handleSubmit = event => {
         event.preventDefault();
+        
+        this.setState({ isLoading: true });
+        // abstract away ??
         this.postCredentials(this.state)
         .then( 
             response => {
                 var isAuthenticated = response.data.payload === true;
-                console.log(this.props);
+                this.checkAuthenticationResponse(isAuthenticated);
                 this.props.userHasAuthenticated(isAuthenticated);
+                this.createUserSession(Is_User_Authenticated, isAuthenticated);
+                this.props.history.push("/");
             }
         )
         .catch(
             error => {
                 console.log(error);
-            }
-        );  
+                this.setState({ isLoading: false });                }
+        ); 
+    }
+
+    checkAuthenticationResponse = (isAuthenticated) =>{
+        if(!isAuthenticated){
+            throw new Error('Invalid login credentials');
+        }
+    }
+
+    createUserSession = (key, isUserAuthenticated) => {
+        if(isUserAuthenticated) {
+            sessionStorage.setItem(key, "true");
+        }
     }
 
     async postCredentials(credentials) {
@@ -66,10 +86,7 @@ class Login extends Component{
                         <FormControl type='password' value={this.state.password} onChange={this.handleChange} />
                     </FormGroup>
 
-                    <Button block bsSize='large' disabled={!this.validateForm()} type='submit'>
-                        Login
-                    </Button>
-
+                    <LoaderButton block bsSize='large' disabled={!this.validateForm()} type='submit' isLoading={this.state.isLoading} text='Login' loadingText='Logging in…' />
                     { this.state.error && <p>{this.state.error}</p> }
                 </form>
             </div>

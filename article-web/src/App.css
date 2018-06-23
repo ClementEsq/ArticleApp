@@ -33,4 +33,27 @@
 
 .App .navbar-brand {
   font-weight: bold;
+  list-style-type: none;
+  color: #333;
+  text-decoration: none;
+}
+
+.App .navbar-brand :link {
+  color: #333;
+  text-decoration: none;
+}
+
+.App .navbar-brand :hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.App .navbar-brand :visited {
+  color: #333;
+  text-decoration: none;
+}
+
+.App .navbar-brand :active {
+  color: #333;
+  text-decoration: none;
 }
