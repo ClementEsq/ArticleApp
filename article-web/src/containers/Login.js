@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import  {Login_API_ENDPOINT} from '../constants/endPoints';
-import  {AXIOS_CONFIG} from '../constants/configs';
-import  {Is_User_Authenticated} from '../constants/sessions';
+import {config} from "../constants/config";
 import axios from 'axios';
 import "./Login.css";
 
@@ -37,37 +35,35 @@ class Login extends Component{
         this.postCredentials(this.state)
         .then( 
             response => {
-                var isAuthenticated = response.data.payload === true;
-                this.checkAuthenticationResponse(isAuthenticated);
+                var AuthenticatedUser = response.data.payload;
+                var isAuthenticated = this.checkAuthenticationResponse(AuthenticatedUser);
                 this.props.userHasAuthenticated(isAuthenticated);
-                this.createUserSession(Is_User_Authenticated, isAuthenticated);
+                this.createUserSession(config.GENERAL_CONFIG.sessionName.AuthenticatedUser, AuthenticatedUser);
                 this.props.history.push("/");
             }
         )
         .catch(
             error => {
                 console.log(error);
-                this.setState({ isLoading: false });                }
+                this.setState({ isLoading: false });                
+            }
         ); 
     }
 
-    checkAuthenticationResponse = (isAuthenticated) =>{
-        if(!isAuthenticated){
+    checkAuthenticationResponse = (AuthenticatedUser) =>{
+        if(AuthenticatedUser == null){
             throw new Error('Invalid login credentials');
         }
+
+        return true;
     }
 
-    createUserSession = (key, isUserAuthenticated) => {
-        if(isUserAuthenticated) {
-            sessionStorage.setItem(key, "true");
-        }
+    createUserSession = (key, AuthenticatedUser) => {
+        sessionStorage.setItem(key, JSON.stringify(AuthenticatedUser));
     }
 
     async postCredentials(credentials) {
-        const result = await axios.post(Login_API_ENDPOINT, {
-            email: credentials.email,
-            password: credentials.password
-        }, AXIOS_CONFIG);
+        const result = await axios.post(config.GENERAL_CONFIG.endpoint.Login, credentials, config.AXIOS_CONFIG.headers);
 
         return result;
     }

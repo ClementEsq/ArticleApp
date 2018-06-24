@@ -8,8 +8,7 @@ import {
 import LoaderButton from '../components/LoaderButton';
 import './Signup.css';
 import axios from 'axios';
-import  { REGISTRATION_API_ENDPOINT} from '../constants/endPoints';
-import  {AXIOS_CONFIG} from '../constants/configs';
+import {config} from "../constants/config";
 
 class Signup extends Component{
     constructor(props) {
@@ -43,13 +42,17 @@ class Signup extends Component{
         });
     }
 
+    handleCheckBoxChange = event => {
+        this.setState({
+          [event.target.id]: event.target.checked
+        });
+    }
+
     handleSubmit = async event => {
         event.preventDefault();
     
-        this.setState({ isLoading: true });
-    
+        this.setState({ isLoading: true });   
         this.postRegistrationDataToApi();
-        
     }
 
     postRegistrationDataToApi = () => {
@@ -59,9 +62,9 @@ class Signup extends Component{
         .then( 
             response => {
                 console.log(response.data.payload);
-                //var isAuthenticated = response.data.payload === true;
-                //this.checkRegistrationResponse(isAuthenticated);
-                //this.props.history.push("/");
+                var isCreated = response.data.payload.isSuccess === true;
+                this.checkRegistrationResponse(isCreated);
+                this.props.history.push("/thankyou");
             }
         )
         .catch(
@@ -73,12 +76,16 @@ class Signup extends Component{
     }
 
     async postDataToApi(registrationDataObject) {
-        const result = await axios.post(REGISTRATION_API_ENDPOINT, registrationDataObject, AXIOS_CONFIG);
+        const result = await axios.post(config.GENERAL_CONFIG.endpoint.Registration, registrationDataObject, config.AXIOS_CONFIG.headers);
 
         return result;
     }
 
-
+    checkRegistrationResponse = (isCreated) =>{
+        if(!isCreated){
+            throw new Error('Unable to create user');
+        }
+    }
 
     // make reusable as component
     renderForm() {
@@ -106,7 +113,7 @@ class Signup extends Component{
                 <HelpBlock>
                     Are you a publisher?
                 </HelpBlock>
-                <FormControl type="checkbox" value={this.state.isPublisher} onChange={this.handleChange} />
+                <FormControl type="checkbox" value={this.state.isPublisher} onChange={this.handleCheckBoxChange} />
             </FormGroup>
             <FormGroup controlId="password" bsSize="large">
                 <ControlLabel>

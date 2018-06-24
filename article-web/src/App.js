@@ -4,7 +4,7 @@ import { Nav, Navbar, NavItem } from "react-bootstrap";
 import './App.css';
 import Routes from "./Routes";
 import { LinkContainer } from "react-router-bootstrap";
-import  {Is_User_Authenticated} from './constants/sessions';
+import {config} from "./constants/config";
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class App extends Component {
 
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      isAuthenticating: true,
+      appStatus: '',
+      userName: ''
     };
   }
 
@@ -22,16 +24,17 @@ class App extends Component {
   
   logUserOut = event => {
     this.userHasAuthenticated(false);
-    sessionStorage.removeItem(Is_User_Authenticated);
+    sessionStorage.removeItem(config.GENERAL_CONFIG.sessionName.AuthenticatedUser);
     this.props.history.push("/login");
   }
 
   componentDidMount(){
     try{
-      var authenticated = JSON.parse(sessionStorage.getItem(Is_User_Authenticated));
-      console.log(authenticated);
-      if(authenticated){
+      var authenticatedUser = JSON.parse(sessionStorage.getItem(config.GENERAL_CONFIG.sessionName.AuthenticatedUser));
+      if(authenticatedUser){
         this.userHasAuthenticated(true);
+        this.setState({ appStatus: this.getUserAppStatus(authenticatedUser)});
+        this.setState({ userName: `${authenticatedUser.firstName} ${authenticatedUser.lastName}`});
       }  
     }
     catch(exception){
@@ -39,6 +42,10 @@ class App extends Component {
     }
 
     this.setState({ isAuthenticating: false });
+  }
+
+  getUserAppStatus = authenticatedUser => {
+    return authenticatedUser.isPublisher ? 'Publisher' : '';
   }
 
   render() {
@@ -81,7 +88,13 @@ class App extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-
+        {
+        this.state.isAuthenticated ? 
+          <div>
+            Logged In As {this.state.userName}{' '}({this.state.appStatus})
+          </div> :
+          null
+        }
         <Routes childProps={childProps} />
       </div>
     );
