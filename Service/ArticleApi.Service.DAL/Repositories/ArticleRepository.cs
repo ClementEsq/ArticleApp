@@ -175,7 +175,7 @@ namespace ArticleApi.Service.DAL
             parameter.Add("@ArticleBodyImagePath", entity.BodyImagePath);
             parameter.Add("@ArticleAuthorId", entity.User.UserId);
 
-            return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("CreateArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
+            return await dalSession.UnitOfWork.RepositoryConnection.Connection.ExecuteScalarAsync<int>("CreateArticle", parameter, transaction: dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
         }
 
         private async Task<int> UpdateExistingArticle(Article entity, IDalSession dalSession)
@@ -188,7 +188,7 @@ namespace ArticleApi.Service.DAL
             parameter.Add("@ArticleHeroImagePath", entity.HeroImagePath);
             parameter.Add("@ArticleBodyImagePath", entity.BodyImagePath);
 
-            return await dalSession.UnitOfWork.RepositoryConnection.Connection.QueryFirstAsync<int>("UpdateArticle", parameter, transaction: _dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
+            return await dalSession.UnitOfWork.RepositoryConnection.Connection.ExecuteScalarAsync<int>("UpdateArticle", parameter, transaction: dalSession.UnitOfWork.Transaction, commandType: CommandType.StoredProcedure);
         }
 
         public void Dispose()

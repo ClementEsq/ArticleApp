@@ -1,5 +1,6 @@
 ﻿using ArticleApi.Service.DTO;
 using ArticleApi.Service.DTO.Requests;
+using ArticleApi.Service.DTO.Responses;
 using ArticleApi.Service.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace ArticleApi.Service.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<GenericResponse<bool>>> Login([FromBody]LoginRequest lr)
+        public async Task<ActionResult<GenericResponse<UserLoginResponse>>> Login([FromBody]LoginRequest lr)
         {
 
             var response = await _logInService.LogIn(lr.Email, lr.Password);

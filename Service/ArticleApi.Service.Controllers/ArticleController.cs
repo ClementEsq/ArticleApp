@@ -21,7 +21,7 @@ namespace ArticleApi.Service.Controllers
         }
 
         [HttpGet]
-        [Route("articles")]
+        [Route("all")]
         public async Task<GenericResponse<IEnumerable<Article>>> GetAllArticles()
         {
             return await _articleService.GetAllArticles();
@@ -29,7 +29,7 @@ namespace ArticleApi.Service.Controllers
 
         [HttpPost]
         [Route("publish")]
-        public async Task<ActionResult<HttpStatusCode>> PublishArticle(ArticleRequest ar)
+        public async Task<ActionResult<HttpStatusCode>> PublishArticle([FromBody]ArticleRequest ar)
         {
 
             var statusCode = await _articleService.PublishArticle(ar);

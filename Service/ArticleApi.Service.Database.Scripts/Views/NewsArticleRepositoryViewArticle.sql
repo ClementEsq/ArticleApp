@@ -1,7 +1,7 @@
 USE [NewsArticleRepositoryDb]
 GO
 
-/****** Object:  View [dbo].[View_Article]    Script Date: 16/06/2018 16:48:58 ******/
+/****** Object:  View [dbo].[View_Article]    Script Date: 24/06/2018 20:32:40 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,21 @@ GO
 
 CREATE VIEW [dbo].[View_Article]
 AS
-SELECT        dbo.Article.ArticleId, dbo.Article.Title, dbo.Article.Body, dbo.Article.PublishDate, dbo.Article.IsPublished, dbo.Article.CrDate, dbo.[User].FirstName AS AuthorFirstName, dbo.[User].LastName AS AuthorLastName,
+select 
+result.ArticleId,
+result.Title,
+result.Body,
+result.PublishDate,
+result.IsPublished,
+result.CrDate,
+result.AuthorFirstName,
+result.AuthorLastName,
+result.HeroImagePath,
+result.BodyImagePath,
+result.ArticleLikeCount
+from (
+SELECT  
+                         dbo.Article.ArticleId, dbo.Article.Title, dbo.Article.Body, dbo.Article.PublishDate, dbo.Article.IsPublished, dbo.Article.CrDate, dbo.[User].FirstName AS AuthorFirstName, dbo.[User].LastName AS AuthorLastName,
                              (SELECT        TOP (1) I.ImagePath
                                FROM            dbo.ArticleImage AS AI INNER JOIN
                                                          dbo.Image AS I ON I.ImageId = AI.ImageId
@@ -27,11 +41,14 @@ SELECT        dbo.Article.ArticleId, dbo.Article.Title, dbo.Article.Body, dbo.Ar
                                                                WHERE        (Type = 'BODY')))) AS BodyImagePath,
                              (SELECT        COUNT(*) AS Expr1
                                FROM            dbo.ArticleLike AS AL
-                               WHERE        (ArticleId = dbo.Article.ArticleId)) AS ArticleLikeCount
-FROM            dbo.Article INNER JOIN
-                         dbo.ArticleImage ON dbo.Article.ArticleId = dbo.ArticleImage.ArticleId INNER JOIN
-                         dbo.UserArticle ON dbo.Article.ArticleId = dbo.UserArticle.ArticleId INNER JOIN
+                               WHERE        (ArticleId = dbo.Article.ArticleId)) AS ArticleLikeCount,
+							   row_number() over (partition by dbo.Article.ArticleId order by dbo.Article.ArticleId) as seqnum
+FROM            dbo.Article LEFT JOIN
+                         dbo.ArticleImage ON dbo.Article.ArticleId = dbo.ArticleImage.ArticleId LEFT JOIN
+                         dbo.UserArticle ON dbo.Article.ArticleId = dbo.UserArticle.ArticleId LEFT JOIN
                          dbo.[User] ON dbo.UserArticle.UserId = dbo.[User].UserId
+) result
+where result.seqnum = 1;
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_DiagramPane1', @value=N'[0E232FF0-B466-11cf-A24F-00AA00A3EFFF, 1.00]

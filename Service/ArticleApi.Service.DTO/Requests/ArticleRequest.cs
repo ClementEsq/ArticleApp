@@ -13,7 +13,6 @@ namespace ArticleApi.Service.DTO.Requests
         [Required]
         public string Body { get; set; }
 
-        [Required]
         public bool IsPublished { get; set; }
 
         public string HeroImagePath { get; set; }

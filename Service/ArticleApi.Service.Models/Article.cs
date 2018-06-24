@@ -14,5 +14,7 @@ namespace ArticleApi.Service.Models
         public string BodyImagePath { get; set; }
         public int ArticleLikeCount { get; set; }
         public User User { get; set; }
+
+
     }
 }

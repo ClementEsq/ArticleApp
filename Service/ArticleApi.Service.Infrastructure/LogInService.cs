@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Net;
 using ArticleApi.Service.DTO;
 using ArticleApi.Service.DAL.Interfaces;
+using ArticleApi.Service.DTO.Responses;
 
 namespace ArticleApi.Service.Infrastructure
 {
@@ -16,9 +17,9 @@ namespace ArticleApi.Service.Infrastructure
             _userRepository = userRepository;
         }
 
-        public async Task<GenericResponse<bool>> LogIn(string email, string password)
+        public async Task<GenericResponse<UserLoginResponse>> LogIn(string email, string password)
         {
-            var response = new GenericResponse<bool>();
+            var response = new GenericResponse<UserLoginResponse>();
 
             try
             {
@@ -30,7 +31,15 @@ namespace ArticleApi.Service.Infrastructure
                     var user = await _userRepository.GetUserByEmail(email);
                     var isValidUser = user?.Password.Equals(password);
 
-                    response.Payload = isValidUser == true;
+                    response.Payload = isValidUser.Value ?
+                        new UserLoginResponse()
+                        {
+                            UserId = user.UserId,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            UserEmail = user.UserEmail,
+                            IsPublisher = user.IsPublisher
+                        } : null;
                 }
             }
             catch (Exception ex)
