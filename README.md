@@ -1,4 +1,4 @@
-Build Service Project
+## Build Service Project
 
 Step 1: Open command prompt
 Step 2: cd or pushd into '.\clemento\Service'
@@ -6,7 +6,13 @@ Step 3: run the build batch script to setup the project (create database objects
 Step 4: Open in visual studio and run
 
 
-# Web App
+## Web App
+
 Step 1: cd or pushd into '.\clemento\article-web'
 Step 2: run 'npm start'
 
+## Todo
+
+* Refactor react app (break down components)
+* Correct IDisposable implementation (service)
+* Fix controller layer bleed into service layer (http status codes)
